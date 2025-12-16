@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>File Upload</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* Reset and Base */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      /* The "System Font Stack" - looks native on every device */
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f0f2f5; /* Classic light gray background */
+      color: #1a1a1a;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* The Main Container - styled like a physical card */
+    .container {
+      background-color: #ffffff;
+      border: 1px solid #d1d5db; /* Distinct gray border */
+      border-radius: 8px;
+      padding: 32px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle, realistic shadow */
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 24px;
+      font-weight: 600;
+      color: #111827;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e5e7eb; /* Separator line */
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    /* file input styling */
+    input[type="file"] {
+      font-size: 14px;
+      padding: 10px;
+      border: 1px dashed #9ca3af;
+      background: #f9fafb;
+      border-radius: 4px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    button {
+      background-color: #2563eb; /* A solid, trustworthy blue (not neon) */
+      color: white;
+      padding: 10px 16px;
+      font-size: 16px;
+      font-weight: 500;
+      border: 1px solid #1d4ed8; /* Slight border for depth */
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #1e40af;
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    /* Result Area */
+    .result-area {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #374151;
+    }
+
+    /* Media Handling */
+    img, video {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    a.download-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a.download-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Upload a File</h1>
+
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <input type="file" name="file" required />
+      <button type="submit">Upload File</button>
+    </form>
+
+    <% if (url) { %>
+      <div class="result-area">
+        <h2>Uploaded successfully:</h2>
+
+        <% if (url.match(/\.(jpg|jpeg|png|gif)$/i)) { %>
+          <img src="<%= url %>" alt="Uploaded image" />
+        <% } else if (url.match(/\.(mp4|mov|webm)$/i)) { %>
+          <video src="<%= url %>" controls></video>
+        <% } else if (url.match(/\.(mp3|wav|ogg)$/i)) { %>
+          <audio src="<%= url %>" controls></audio>
+        <% } else { %>
+          <a class="download-link" href="<%= url %>" target="_blank">Download File &rarr;</a>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+
+</body>
+</html>
